@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    margin: 10px 13px 10px 13px;
+}
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+div {
+	font-size: 16px;
+	line-height: 1.5;
+}
+.small-title {
+	margin-bottom:20px;
+	margin-top:30px;
+	font-size:20px!important;
+}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title><h1>angularjs表单基础</h1></title>
+
+</head>
+<body>
+<p><br></p>
+
+<h2><h1>angularjs表单基础</h1></h2>
+
+<hr />
+
+<div style="margin-top:30px">
+
+angularjs在表单方面最明显也最实用的特点，就是扩展了很多校验方面的指令，结合一些其他内置指令，可以让表单基本交互的实现变得非常简单。下面一个最简单的例子，大家随意感受下：
+</div>
+
+
+<p><br></p>
+
+<iframe width="100%" height="360" src="http://jsfiddle.net/ddcat1115/rLgY9/28/embedded/html,css,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+
+<p><br></p>
+
+<div style="margin-bottom:50px;">
+可以看到，不用任何js，也能实现基本的校验，报错展示，防重复提交等表单所需的基本功能，这依赖于angular对form及其内部的表单控件的扩展。
+</div>
+
+
+<h3><div class="small-title">（一）对form的扩展</div></h3>
+
+<p><strong><strong style="line-height:1.5;font-size:16px;">位于ng-app内部的form标签，已经被包装过，实际上是一个angular内置指令，它创建了一个FormController</strong><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup><strong style="line-height:1.5;font-size:16px;"> 实例 ，该对象（form）具有一些原生form不具备的属性和方法</strong></strong></p>
+
+<ul>
+<li><div>可嵌套</div></li>
+<li><div>具有的属性</div>
+
+<ul>
+<li><div>$pristine——没有填写记录，bull</div></li>
+<li><div>$dirty——有填写记录，bull</div></li>
+<li><div>$valid——通过验证，bull</div></li>
+<li><div>$invalid——未通过验证，bull</div></li>
+<li><div>$error——错误信息，对象，主要包含以下几个属性，属性值为对应字段列表(貌似直接用form的$error属性的比较少)</div>
+
+<ul>
+<li><div>email</div></li>
+<li><div>max</div></li>
+<li><div>maxlength</div></li>
+<li><div>min</div></li>
+<li><div>minlength</div></li>
+<li><div>number</div></li>
+<li><div>pattern</div></li>
+<li><div>required</div></li>
+<li><div>url</div></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div>在html代码里用form的name值就可获取该对象，进一步可获取其属性（如：formName.$valid），结合ng-show,ng-disabled等指令即可实现报错展示，按钮置灰等基本效果</div>
+<br>
+
+<pre><code>- 可以给form标签加上“novalidate”，用来禁掉html5内置校验
+- 如果要用原生form，可以给form标签加上“ng-pristine”指令
+</code></pre>
+
+<h3><div class="small-title">（二）对表单控件的扩展</div></h3>
+
+<p><strong><strong style="line-height:1.5;font-size:16px;">跟form一样，表单内的所有控件也不再是原生控件，而是NgModelController</strong><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> <strong style="line-height:1.5;font-size:16px;">的实例，它同样拥有上面form的五个属性</strong></strong></p>
+
+<div>angular对input的type属性进行了扩展，主要包含以下几种</div>
+
+
+<ul>
+<li><div>number，附带多了max ， min 属性</div></li>
+<li><div>url</div></li>
+<li><div>email</div></li>
+</ul>
+
+
+<div>此外可用的控件属性主要有</div>
+
+
+<ul>
+<li><div>ng-model——绑定的数据</div></li>
+<li><div>required——是否必填</div></li>
+<li><div>ng-minlength——最小长度</div></li>
+<li><div>ng-maxlength——最大长度</div></li>
+<li><div>ng-pattern——匹配模式</div></li>
+<li><div>ng-change——值变化时的回调</div></li>
+</ul>
+
+
+<div>在代码里用formName.inputName即可获取该控件对象，进一步可获取其各个属性，结合ng-show等指令即可实现大部分校验功能</div>
+<br>
+
+<pre><code>- 控件必须加ng-model,否则无法校验
+</code></pre>
+
+<h3><div class="small-title">（三）内置css</div></h3>
+
+<div>内置了四种动态类</div>
+
+
+<ul>
+<li><div>ng-valid——验证通过时自动添加</div></li>
+<li><div>ng-invalid——验证失败时自动添加</div></li>
+<li><div>ng-pristine——未填入任何数据前</div></li>
+<li><div>ng-dirty——填过数据后</div></li>
+</ul>
+
+
+<div>可以通过设置类似 input.ng-valid{color:green;} 来实现表单样式的状态转换</div>
+
+
+<h3><div class="small-title">（四）自定义指令…</div></h3>
+
+<div>可以通过自定义指令的方式来进一步扩展校验规则，表单控件等，不过那是另一个故事了，待续…</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://docs.angularjs.org/api/ng/type/form.FormController">http://docs.angularjs.org/api/ng/type/form.FormController</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://docs.angularjs.org/api/ng/type/ngModel.NgModelController">http://docs.angularjs.org/api/ng/type/ngModel.NgModelController</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+</body>
+</html>
